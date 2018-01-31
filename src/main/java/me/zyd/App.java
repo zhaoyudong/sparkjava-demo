@@ -1,10 +1,7 @@
 package me.zyd;
 
 import com.google.gson.*;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import com.mongodb.*;
 import me.zyd.controller.UserController;
 import me.zyd.result.ErrorCode;
 import org.bson.types.ObjectId;
@@ -18,8 +15,7 @@ import static spark.Spark.*;
  */
 public class App {
     public static void main(String[] args) {
-        MongoCredential mongoCredential = MongoCredential.createMongoCRCredential("test1", "test", "test1".toCharArray());
-        MongoClient mongoClient = new MongoClient(new ServerAddress("192.168.10.68"), mongoCredential, MongoClientOptions.builder().build());
+        MongoClient mongoClient = new MongoClient(new MongoClientURI(""));
         UserController userController = new UserController(mongoClient.getDatabase("test"));
         Gson gson = new GsonBuilder().registerTypeAdapter(ObjectId.class, new JsonSerializer<ObjectId>() {
             @Override
